@@ -20,7 +20,12 @@ export default function GoogleAuthButton({ label = 'Continue with Google' }: Goo
       }
     } catch (err: any) {
       setLoading(false);
-      toast.error(err.response?.data?.detail || 'Failed to initialize Google Auth');
+      const errorMessage =
+        err.response?.data?.detail ||
+        (err.code === 'ERR_NETWORK'
+          ? `Backend API unreachable. Please ensure the backend server is running at ${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}`
+          : 'Failed to initialize Google Auth');
+      toast.error(errorMessage);
     }
   };
 
