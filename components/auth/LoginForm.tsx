@@ -1,19 +1,20 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useLogin } from '../../hooks/mutations/useAuthMutations';
 import { UserLoginPayload } from '../../types/auth';
 import GoogleAuthButton from './GoogleAuthButton';
-import { ArrowRight, Lock, Mail } from 'lucide-react';
+import { ArrowRight, Lock, Mail, Eye, EyeOff, Loader2 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 export default function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const loginMutation = useLogin();
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     const errorParam = searchParams.get('error');
@@ -72,6 +73,8 @@ export default function LoginForm() {
             <input
               type="email"
               placeholder="user@example.com"
+              autoComplete="email"
+              disabled={loginMutation.isPending}
               {...register('email', {
                 required: 'Email address is required',
                 pattern: {
@@ -81,7 +84,7 @@ export default function LoginForm() {
               })}
               className={`w-full pl-9 pr-3 py-2 bg-sky-400/[0.04] backdrop-blur-md border ${
                 errors.email ? 'border-red-500' : 'border-sky-400/30 focus:border-sky-400'
-              } rounded-none text-xs text-white placeholder-zinc-500 focus:outline-none transition-colors font-sans`}
+              } rounded-none text-xs text-white placeholder-zinc-500 focus:outline-none transition-colors font-sans disabled:opacity-50`}
             />
           </div>
           {errors.email && (
@@ -101,15 +104,25 @@ export default function LoginForm() {
               <Lock className="w-3.5 h-3.5" />
             </div>
             <input
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               placeholder="••••••••"
+              autoComplete="current-password"
+              disabled={loginMutation.isPending}
               {...register('password', {
                 required: 'Password is required',
               })}
-              className={`w-full pl-9 pr-3 py-2 bg-sky-400/[0.04] backdrop-blur-md border ${
+              className={`w-full pl-9 pr-10 py-2 bg-sky-400/[0.04] backdrop-blur-md border ${
                 errors.password ? 'border-red-500' : 'border-sky-400/30 focus:border-sky-400'
-              } rounded-none text-xs text-white placeholder-zinc-500 focus:outline-none transition-colors font-sans`}
+              } rounded-none text-xs text-white placeholder-zinc-500 focus:outline-none transition-colors font-sans disabled:opacity-50`}
             />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute inset-y-0 right-0 pr-3 flex items-center text-zinc-400 hover:text-sky-400 transition-colors"
+              tabIndex={-1}
+            >
+              {showPassword ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
+            </button>
           </div>
           {errors.password && (
             <p className="mt-0.5 text-[11px] text-red-400 font-mono">{errors.password.message}</p>
@@ -120,10 +133,19 @@ export default function LoginForm() {
         <button
           type="submit"
           disabled={loginMutation.isPending}
-          className="w-full py-2.5 px-4 rounded-none bg-sky-400 hover:bg-sky-300 text-black text-xs font-bold uppercase tracking-wider transition-colors flex items-center justify-center gap-2 shadow-lg shadow-sky-950/50 disabled:opacity-50 mt-4"
+          className="w-full py-2.5 px-4 rounded-none bg-sky-400 hover:bg-sky-300 text-black text-xs font-bold uppercase tracking-wider transition-colors flex items-center justify-center gap-2 shadow-lg shadow-sky-950/50 disabled:opacity-50 mt-4 cursor-pointer disabled:cursor-not-allowed"
         >
-          <span>{loginMutation.isPending ? 'Signing In...' : 'Sign In'}</span>
-          <ArrowRight className="w-4 h-4" />
+          {loginMutation.isPending ? (
+            <>
+              <Loader2 className="w-4 h-4 animate-spin" />
+              <span>Signing In...</span>
+            </>
+          ) : (
+            <>
+              <span>Sign In</span>
+              <ArrowRight className="w-4 h-4" />
+            </>
+          )}
         </button>
       </form>
 

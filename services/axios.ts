@@ -42,8 +42,12 @@ apiClient.interceptors.response.use(
 
     // If error is 401 and we haven't retried yet
     if (error.response?.status === 401 && !originalRequest._retry) {
-      // If the refresh endpoint itself fails or login endpoint, don't loop
-      if (originalRequest.url?.includes('/auth/refresh') || originalRequest.url?.includes('/auth/login')) {
+      // If the refresh endpoint itself fails or login/register endpoint, don't loop
+      if (
+        originalRequest.url?.includes('/auth/refresh') ||
+        originalRequest.url?.includes('/auth/login') ||
+        originalRequest.url?.includes('/auth/register')
+      ) {
         return Promise.reject(error);
       }
 
@@ -88,9 +92,10 @@ apiClient.interceptors.response.use(
 
     // Show generic error toasts for non-401s if they are 500s or network errors
     if (!error.response) {
-      toast.error('Network error. Please check your connection.', { id: 'network-error' });
+      toast.error(`Cannot connect to backend API (${baseURL}). Check if server is running.`, { id: 'network-error' });
     } else if (error.response.status >= 500) {
-      toast.error('A server error occurred. Please try again later.', { id: 'server-error' });
+      const detailMsg = typeof error.response.data?.detail === 'string' ? error.response.data.detail : null;
+      toast.error(detailMsg || 'A server error occurred. Please try again later.', { id: 'server-error' });
     }
 
     return Promise.reject(error);

@@ -15,6 +15,17 @@ import { useAppDispatch } from '../../store';
 import { setUser, logout as logoutAction } from '../../store/slices/authSlice';
 import toast from 'react-hot-toast';
 
+function extractErrorMessage(error: any, fallback: string): string {
+  const detail = error?.response?.data?.detail;
+  if (typeof detail === 'string') {
+    return detail;
+  }
+  if (Array.isArray(detail)) {
+    return detail.map((d: any) => d.msg || JSON.stringify(d)).join('; ');
+  }
+  return error?.message || fallback;
+}
+
 /**
  * Register mutation hook (POST /auth/register)
  */
@@ -31,7 +42,7 @@ export function useRegister() {
       toast.success(data.message || 'Account created successfully!');
     },
     onError: (error) => {
-      const message = error?.response?.data?.detail || error?.message || 'Registration failed';
+      const message = extractErrorMessage(error, 'Registration failed');
       toast.error(message);
     },
   });
@@ -53,7 +64,7 @@ export function useLogin() {
       toast.success(data.message || 'Login successful!');
     },
     onError: (error) => {
-      const message = error?.response?.data?.detail || error?.message || 'Login failed';
+      const message = extractErrorMessage(error, 'Login failed');
       toast.error(message);
     },
   });
