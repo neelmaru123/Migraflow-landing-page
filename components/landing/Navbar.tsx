@@ -53,6 +53,13 @@ export default function Navbar() {
           {/* Nav Links with Smooth Scroll Offset */}
           <nav className="hidden md:flex items-center gap-8 text-xs font-semibold text-zinc-300 tracking-wider uppercase">
             <a
+              href="#demo"
+              onClick={(e) => handleNavClick(e, 'demo')}
+              className="hover:text-sky-400 transition-colors"
+            >
+              Demo
+            </a>
+            <a
               href="#overview"
               onClick={(e) => handleNavClick(e, 'overview')}
               className="hover:text-sky-400 transition-colors"
@@ -105,6 +112,13 @@ export default function Navbar() {
         {/* Mobile Dropdown Menu */}
         {mobileMenuOpen && (
           <div className="md:hidden mt-3 p-4 rounded-none bg-black/90 backdrop-blur-2xl border border-sky-400/20 flex flex-col gap-3">
+            <a
+              href="#demo"
+              onClick={(e) => handleNavClick(e, 'demo')}
+              className="text-zinc-300 hover:text-sky-400 py-1 text-xs font-semibold uppercase"
+            >
+              Demo
+            </a>
             <a
               href="#overview"
               onClick={(e) => handleNavClick(e, 'overview')}

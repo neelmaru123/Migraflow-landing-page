@@ -1,6 +1,7 @@
 import React from 'react';
 import Navbar from '../components/landing/Navbar';
 import Hero from '../components/landing/Hero';
+import DemoVideoSection from '../components/landing/DemoVideoSection';
 import DatabaseFlowDiagram from '../components/landing/DatabaseFlowDiagram';
 import FeaturesGrid from '../components/landing/FeaturesGrid';
 import WorkflowSteps from '../components/landing/WorkflowSteps';
@@ -22,6 +23,7 @@ export default function LandingPage() {
       {/* Content Sections below Hero with Animated Scroll Light Line */}
       <div className="relative">
         <ScrollLightLine />
+        <DemoVideoSection />
         <DatabaseFlowDiagram />
         <FeaturesGrid />
         <WorkflowSteps />

@@ -40,9 +40,10 @@ export default function ScrollLightLine() {
 
   // Section Branch Percentages aligned precisely with section card centers
   const branchSections = [
-    { topPercent: 25, label: 'Topology Diagram Nodes' },
-    { topPercent: 55, label: 'Capabilities Cards' },
-    { topPercent: 86, label: 'Workflow 4-Step Cards (Center)' },
+    { topPercent: 12, label: 'Live System Demo' },
+    { topPercent: 37, label: 'Topology Diagram Nodes' },
+    { topPercent: 62, label: 'Capabilities Cards' },
+    { topPercent: 88, label: 'Workflow 4-Step Cards (Center)' },
   ];
 
   return (
