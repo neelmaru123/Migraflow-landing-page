@@ -66,15 +66,34 @@ export default function Footer() {
         </div>
 
         {/* Giant Outlined Typography Watermark: Migraflow */}
-        <div className="w-full my-8 flex items-center justify-center overflow-hidden pointer-events-none select-none">
-          <div className="flex items-center justify-center gap-4 w-full">
+        <div
+          className="w-full my-8 py-2 flex items-center justify-center pointer-events-none select-none overflow-hidden"
+          style={{ containerType: 'inline-size' }}
+        >
+          <div className="flex items-center justify-center gap-[clamp(0.5rem,2cqw,1.5rem)] w-full max-w-full">
             {/* Outlined Logo Icon */}
-            <div className="w-16 h-16 sm:w-28 sm:h-28 md:w-36 md:h-36 rounded-none border-2 border-sky-400/50 flex items-center justify-center text-transparent text-3xl sm:text-6xl md:text-7xl font-black font-mono shrink-0">
-              <span className="[-webkit-text-stroke:1.5px_rgba(56,189,248,0.7)]">M</span>
+            <div
+              className="rounded-none border-2 sm:border-[2.5px] border-sky-400/50 flex items-center justify-center text-transparent font-black font-mono shrink-0 transition-opacity duration-500"
+              style={{
+                width: 'clamp(2.5rem, 14cqw, 10.75rem)',
+                height: 'clamp(2.5rem, 14cqw, 10.75rem)',
+              }}
+            >
+              <span
+                className="[-webkit-text-stroke:1.25px_rgba(56,189,248,0.7)] sm:[-webkit-text-stroke:2px_rgba(56,189,248,0.7)] md:[-webkit-text-stroke:2.5px_rgba(56,189,248,0.7)]"
+                style={{ fontSize: 'clamp(1.5rem, 8.5cqw, 6.5rem)' }}
+              >
+                M
+              </span>
             </div>
 
             {/* Giant Stroked Text: Migraflow */}
-            <h2 className="text-[11vw] sm:text-[12vw] font-black uppercase tracking-tighter leading-none text-transparent [-webkit-text-stroke:1.5px_rgba(56,189,248,0.55)] opacity-85 hover:opacity-100 transition-opacity duration-500 whitespace-nowrap">
+            <h2
+              className="font-black uppercase tracking-tighter leading-none text-transparent [-webkit-text-stroke:1.25px_rgba(56,189,248,0.55)] sm:[-webkit-text-stroke:1.75px_rgba(56,189,248,0.55)] md:[-webkit-text-stroke:2.25px_rgba(56,189,248,0.55)] opacity-85 hover:opacity-100 transition-opacity duration-500 whitespace-nowrap text-[clamp(2.4rem,11vw,10.75rem)]"
+              style={{
+                fontSize: 'clamp(2.4rem, 14.1cqw, 10.75rem)',
+              }}
+            >
               Migraflow
             </h2>
           </div>
